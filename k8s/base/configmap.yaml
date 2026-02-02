@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: devops-platform-config
+data:
+  APP_ENV: "dev"
+  APP_NAME: "DevOps Platform Demo"

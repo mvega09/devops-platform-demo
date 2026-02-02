@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devops-platform
+  labels:
+    app: devops-platform
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: devops-platform
+  template:
+    metadata:
+      labels:
+        app: devops-platform
+    spec:
+      containers:
+      - name: devops-platform
+        image: mvega0911/devops-platform:1.0
+        ports:
+        - containerPort: 8000
+        envFrom:
+        - configMapRef:
+            name: devops-platform-config
+        - secretRef:
+            name: devops-platform-secret
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 3
+          periodSeconds: 5
