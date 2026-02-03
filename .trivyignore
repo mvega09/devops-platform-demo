@@ -1,0 +1,10 @@
+# Vulnerabilidades del sistema base sin fix disponible
+CVE-2026-0861
+CVE-2026-24882
+CVE-2025-7458
+CVE-2023-45853
+
+# Vulnerabilidades en dependencias vendor de setuptools que no podemos controlar directamente
+# Ya tenemos setuptools y wheel actualizados, pero setuptools mantiene copias vendor antiguas
+CVE-2026-23949
+CVE-2026-24049
