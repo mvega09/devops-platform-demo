@@ -1,5 +1,5 @@
 # ---------- STAGE 1: build ----------
-FROM python:3.11-slim-bookworm AS builder  # Especificar versión explícita
+FROM python:3.11-slim-bookworm AS builder
 
 WORKDIR /app
 
@@ -16,7 +16,7 @@ RUN pip install --upgrade pip setuptools wheel \
     && pip install --user -r requirements.txt
 
 # ---------- STAGE 2: runtime ----------
-FROM python:3.11-slim-bookworm  # Especificar versión explícita
+FROM python:3.11-slim-bookworm
 
 WORKDIR /app
 
