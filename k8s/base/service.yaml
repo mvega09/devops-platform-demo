@@ -6,7 +6,7 @@ spec:
   selector:
     app: devops-platform
   ports:
-    - nodePort: 30001
-      port: 80
-      targetPort: 8000
+    - nodePort: 30001 #Puerto del Host/Nodo por donde el servicio NodePort sera accesible
+      port: 80 #Puerto del servicio en este caso NodePort
+      targetPort: 8000 #Puerto de los Pods Objetivos
   type: NodePort
