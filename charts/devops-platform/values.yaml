@@ -1,0 +1,20 @@
+# Valores personalizados para nuestra plataforma
+replicaCount: 2
+
+image:
+  repository: mvega0911/devops-platform
+  tag: "1.0"
+  pullPolicy: IfNotPresent
+
+config:
+  env: "dev"
+  appName: "DevOps Platform Demo"
+
+secret:
+  key: "c3VwZXJzZWNyZXRrZXkxMjM="
+
+service:
+  type: NodePort
+  port: 80
+  targetPort: 8000
+  nodePort: 30001
