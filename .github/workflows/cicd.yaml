@@ -2,11 +2,14 @@ name: DevOps Platform CI/CD
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
+    paths:
+      - 'app/**'
+      - '.github/workflows/**'
 
 env:
   IMAGE_NAME: mvega0911/devops-platform
-  IMAGE_TAG: "1.0"
 
 jobs:
   build-test-scan:
@@ -32,14 +35,16 @@ jobs:
         file: ./app/Dockerfile
         push: false
         load: true
-        tags: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+        tags: |
+          ${{ env.IMAGE_NAME }}:latest
+          ${{ env.IMAGE_NAME }}:${{ github.sha }}
         cache-from: type=gha
         cache-to: type=gha,mode=max
 
     - name: Scan image with Trivy
       uses: aquasecurity/trivy-action@master
       with:
-        image-ref: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+        image-ref: ${{ env.IMAGE_NAME }}:${{ github.sha }}
         format: 'table'
         severity: 'CRITICAL,HIGH'
         exit-code: '1'
@@ -47,4 +52,5 @@ jobs:
     - name: Push Docker image
       if: success()
       run: |
-        docker push ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+        docker push ${{ env.IMAGE_NAME }}:latest
+        docker push ${{ env.IMAGE_NAME }}:${{ github.sha }}
