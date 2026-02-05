@@ -11,6 +11,10 @@ spec:
       app: {{ .Release.Name }}
   template:
     metadata:
+      annotations:
+        prometheus.io/scrape: "true" # Prometheus leerá este Pod
+        prometheus.io/port: "8000"   # Puerto de tu app Python
+        prometheus.io/path: "/metrics"
       labels:
         app: {{ .Release.Name }}
     spec:

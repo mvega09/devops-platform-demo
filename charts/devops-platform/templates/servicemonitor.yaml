@@ -1,0 +1,16 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ .Release.Name }}-monitor
+  labels:
+    release: monitoring # Este label debe coincidir con el nombre de tu instalación de Prometheus
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  namespaceSelector:
+    any: true
+  endpoints:
+  - port: http-metrics # Debe coincidir con el NAME que pusimos en el service.yaml
+    interval: 15s
+    path: /metrics

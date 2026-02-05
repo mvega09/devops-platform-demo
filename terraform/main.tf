@@ -1,3 +1,16 @@
+terraform {
+  required_providers {
+    helm = {
+      source  = "hashicorp/helm"
+      version = "~> 2.12.0" # Forzamos una versión moderna
+    }
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = "~> 2.25.0"
+    }
+  }
+}
+
 # Configuración de los proveedores
 provider "kubernetes" {
   config_path = "~/.kube/config" # Ruta a tu config de Minikube
@@ -5,7 +18,7 @@ provider "kubernetes" {
 }
 
 provider "helm" {
-  kubernetes = {
+  kubernetes {
     config_path = "~/.kube/config"
     config_context = "minikube"
   }
@@ -54,5 +67,35 @@ resource "kubernetes_manifest" "devops_platform_app" {
         }
       }
     }
+  }
+}
+
+# Namespace para monitoreo
+resource "kubernetes_namespace_v1" "monitoring" {
+  metadata {
+    name = "monitoring"
+  }
+}
+
+# Helm Release para Kube-Prometheus-Stack
+resource "helm_release" "prometheus_stack" {
+  name       = "monitoring"
+  repository = "https://prometheus-community.github.io/helm-charts"
+  chart      = "kube-prometheus-stack"
+  namespace  = kubernetes_namespace_v1.monitoring.metadata[0].name # Usamos la referencia dinámica
+  
+  # Forzamos la creación del namespace si no existe (doble seguridad)
+  create_namespace = true
+
+  # Habilitamos Grafana y configuramos acceso básico
+  # Nota: El bloque set DEBE ir sin el signo "=" antes de la llave
+  set {
+    name  = "grafana.enabled"
+    value = "true"
+  }
+
+  set {
+    name  = "prometheus.enabled"
+    value = "true"
   }
 }
