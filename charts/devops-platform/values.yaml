@@ -1,5 +1,5 @@
 # Valores personalizados para nuestra plataforma
-replicaCount: 5
+replicaCount: 2
 
 image:
   repository: mvega0911/devops-platform
