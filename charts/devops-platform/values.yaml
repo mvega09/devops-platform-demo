@@ -8,7 +8,7 @@ image:
 
 config:
   env: "dev"
-  appName: "DevOps Platform Demo"
+  appName: "DevOps Platform Demo V1.2"
 
 secret:
   key: "c3VwZXJzZWNyZXRrZXkxMjM="
