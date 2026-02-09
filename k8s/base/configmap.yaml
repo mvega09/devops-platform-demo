@@ -4,4 +4,4 @@ metadata:
   name: devops-platform-config
 data:
   APP_ENV: "dev"
-  APP_NAME: "DevOps Platform Demo"
+  APP_NAME: "DevOps Platform Demo V1.2"

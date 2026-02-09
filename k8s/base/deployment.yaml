@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: devops-platform
-        image: mvega0911/devops-platform:1.0
+        image: mvega0911/devops-platform:latest
         ports:
         - containerPort: 8000
         envFrom:

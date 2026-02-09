@@ -103,9 +103,9 @@ resource "helm_release" "argocd" {
         service = {
           type = "ClusterIP"
         }
-        extraArgs = [
-          "--insecure" # Para desarrollo local
-        ]
+        # extraArgs = [
+        #   "--insecure" # Para desarrollo local
+        # ]
       }
     })
   ]
