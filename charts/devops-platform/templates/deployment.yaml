@@ -9,18 +9,26 @@ spec:
   selector:
     matchLabels:
       app: {{ .Release.Name }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
   template:
     metadata:
       annotations:
-        prometheus.io/scrape: "true" # Prometheus leerá este Pod
-        prometheus.io/port: "8000"   # Puerto de tu app Python
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "{{ .Values.service.targetPort }}"
         prometheus.io/path: "/metrics"
       labels:
         app: {{ .Release.Name }}
     spec:
       containers:
       - name: devops-platform
-        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default "latest" }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy | default "Always" }}
         ports:
         - containerPort: {{ .Values.service.targetPort }}
         envFrom:
