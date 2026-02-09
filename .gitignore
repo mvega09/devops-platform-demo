@@ -55,3 +55,6 @@ backup.yaml
 *.tfstate
 *.tfstate.backup
 .terraform.lock.hcl
+
+# Trivi
+.trivyignore
