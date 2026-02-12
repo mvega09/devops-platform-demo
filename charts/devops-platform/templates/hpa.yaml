@@ -29,4 +29,11 @@ spec:
           type: Utilization
           averageUtilization: {{ .Values.hpa.targetMemoryUtilizationPercentage }}
   {{- end }}
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 180  # Reduce de 300s (5 min) a 60s (3 min)
+      policies:
+        - type: Percent
+          value: 100                  # Permite eliminar hasta el 100% de los pods excedentes
+          periodSeconds: 15           # Evalúa cada 15 segundos
 {{- end }}
