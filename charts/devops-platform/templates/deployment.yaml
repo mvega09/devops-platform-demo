@@ -5,7 +5,9 @@ metadata:
   labels:
     app: {{ .Release.Name }}
 spec:
+  {{- if not .Values.hpa.enabled }}
   replicas: {{ .Values.replicaCount }}
+  {{- end }}
   selector:
     matchLabels:
       app: {{ .Release.Name }}
@@ -38,11 +40,11 @@ spec:
             name: {{ .Release.Name }}-secret
         resources:
           requests:
-            cpu: "100m"
-            memory: "128Mi"
+            cpu: {{ .Values.resources.requests.cpu | quote }}
+            memory: {{ .Values.resources.requests.memory | quote }}
           limits:
-            cpu: "500m"
-            memory: "512Mi"
+            cpu: {{ .Values.resources.limits.cpu | quote }}
+            memory: {{ .Values.resources.limits.memory | quote }}
         livenessProbe:
           httpGet:
             path: /health

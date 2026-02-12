@@ -13,8 +13,10 @@ echo -e "${BLUE}🚀 Iniciando automatización DevOps Platform...${NC}"
 if ! minikube status > /dev/null 2>&1; then
     echo -e "${BLUE}🟡 Minikube no está iniciado. Iniciando...${NC}"
     minikube start --driver=docker --memory=4096
+    minikube addons enable metrics-server
 else
     echo -e "${GREEN}✅ Minikube ya está en ejecución.${NC}"
+    minikube addons enable metrics-server
 fi
 
 # 2. Inicializar y aplicar Terraform
@@ -106,6 +108,13 @@ echo -e "${GREEN}🌐 Configurando túneles para servicios...${NC}"
 pkill -f "port-forward.*argocd-server" 2>/dev/null
 pkill -f "port-forward.*monitoring-grafana" 2>/dev/null
 pkill -f "port-forward.*prometheus-operated" 2>/dev/null
+
+# App DevOps Platform
+echo -e "${YELLOW}   → Iniciando túnel de la Aplicación...${NC}"
+pkill -f "port-forward.*devops-platform-service" 2>/dev/null
+kubectl port-forward svc/devops-platform-service -n default 8081:80 > /dev/null 2>&1 &
+APP_PF_PID=$!
+echo -e "${GREEN}   ✅ App URL: http://localhost:8081${NC}"
 
 # ArgoCD
 echo -e "${YELLOW}   → Iniciando túnel de ArgoCD...${NC}"

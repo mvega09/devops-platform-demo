@@ -18,3 +18,18 @@ service:
   port: 80
   targetPort: 8000
   nodePort: 30001
+
+resources:
+  requests:
+    cpu: "50m"      # 0.05 núcleos
+    memory: "64Mi"  # Mínimo para arrancar cómodamente
+  limits:
+    cpu: "200m"     # Evita que un proceso infinito consuma todo el nodo
+    memory: "128Mi" # Límite razonable para este código
+
+hpa:
+  enabled: true
+  minReplicas: 3
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
