@@ -19,6 +19,16 @@ else
     minikube addons enable metrics-server
 fi
 
+echo -e "${BLUE}🏗️  Configurando Sealed Secrets en el clúster...${NC}"
+KUBESEAL_VERSION="0.21.0"
+
+# Solo aplicamos el controlador al clúster de Minikube
+kubectl apply -f https://github.com/bitnami-labs/sealed-secrets/releases/download/v${KUBESEAL_VERSION}/controller.yaml
+
+# Verificar que el deployment del controlador se cree
+echo -e "${BLUE}⏳ Esperando al controlador de Sealed Secrets...${NC}"
+kubectl wait --for=condition=available --timeout=120s deployment/sealed-secrets-controller -n kube-system
+
 # 2. Inicializar y aplicar Terraform
 echo -e "${BLUE}🏗️  Configurando infraestructura con Terraform...${NC}"
 cd terraform
