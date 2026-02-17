@@ -39,6 +39,7 @@ jobs:
       run: |
         pip install pytest httpx
         export PYTHONPATH=$PYTHONPATH:$(pwd)/app
+        export DATABASE_URL="sqlite:///:memory:"
         pytest app/test/
 
     - name: Set up Docker Buildx
