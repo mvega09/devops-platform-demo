@@ -1,9 +1,6 @@
 # DevOps Platform Demo 🌟
 
-Plataforma **DevOps end-to-end** Laboratorio que demuestra habilidades profesionales en desarrollo, contenerización, orquestación, IaC, GitOps, monitoreo y seguridad.
-
-**Problema que resuelve:**  
-Despliegues automatizados y reproducibles,Infraestructura inmutable y versionada, Monitoreo en tiempo real con alertas, Rollback automático en caso de fallos, Escalado horizontal automático, GitOps para gestión declarativa y errores humanos frecuentes en entornos de producción.
+Plataforma **DevOps end-to-end** que demuestra habilidades profesionales en desarrollo, contenerización, orquestación, IaC, GitOps, monitoreo y seguridad.
 
 ![Arquitectura](img/DevOps-Platform.png)
 
@@ -69,6 +66,40 @@ devops-platform-demo/
 | Sealed Secrets (kubeseal) | 0.21.0+ | [Instalar](https://github.com/bitnami-labs/sealed-secrets/releases) |
 
 > ⚠️ **Importante:** La versión de `kubeseal` instalada en la máquina local debe coincidir exactamente con la del controlador desplegado en el clúster de Minikube.
+
+### 🔐 Procedimiento de Sellado de Secretos
+
+**1. Codificar el valor en base64**
+```bash
+echo -n 'tu_password' | base64
+```
+
+**2. Crear el archivo de secreto temporal**
+```yaml
+# password-raw.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: devops-platform-db-secret
+  namespace: default
+data:
+  postgres-password: <VALOR_BASE64>
+```
+
+**3. Generar el secreto sellado**
+```bash
+kubeseal --format=yaml < password-raw.yaml > sealed-secret-db.yaml
+
+# O directamente sobre el chart
+kubeseal --format=yaml < charts/devops-platform/templates/db-password.yaml > charts/devops-platform/templates/sealed-secret-db.yaml
+```
+
+**4. Eliminar el archivo original**
+```bash
+rm password-raw.yaml  # o db-password.yaml
+```
+
+> 🔒 **Solo el `SealedSecret` se sube al repositorio.** El archivo con el secreto en texto plano o base64 debe eliminarse siempre antes del `git push`.
 
 ---
 
