@@ -1,6 +1,6 @@
 # DevOps Platform Demo 🌟
 
-Plataforma **DevOps end-to-end** laboratorio que demuestra habilidades profesionales en la cultura DevOps, contenerización, orquestación, IaC, GitOps, monitoreo y seguridad.
+Laboratorio **DevOps end-to-end** que demuestra habilidades profesionales en cultura DevOps: contenerización, orquestación, infraestructura como código, GitOps, monitoreo y seguridad.
 
 **Problema que resuelve:**  
 Despliegues automatizados y reproducibles,Infraestructura inmutable y versionada, Monitoreo en tiempo real con alertas, Rollback automático en caso de fallos, Escalado horizontal automático, GitOps para gestión declarativa y errores humanos frecuentes en entornos de producción.
