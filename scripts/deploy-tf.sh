@@ -75,14 +75,6 @@ fi
 echo -e "${BLUE}🔐 Obteniendo credenciales de ArgoCD...${NC}"
 ARGOCD_PWD=$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" 2>/dev/null | base64 -d)
 
-if [ -z "$ARGOCD_PWD" ]; then
-    echo -e "${YELLOW}⚠️  No se pudo obtener la contraseña de ArgoCD automáticamente.${NC}"
-else
-    echo -e "${GREEN}✅ Credenciales de ArgoCD:${NC}"
-    echo "   Usuario: admin"
-    echo "   Password: $ARGOCD_PWD"
-fi
-
 # 4. Esperar a que la aplicación DevOps Platform esté sincronizada
 echo -e "${BLUE}⏳ Esperando a que ArgoCD sincronice la aplicación...${NC}"
 sleep 10
