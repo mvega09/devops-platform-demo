@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from prometheus_client import Counter, generate_latest
 from starlette.responses import Response
 import logging

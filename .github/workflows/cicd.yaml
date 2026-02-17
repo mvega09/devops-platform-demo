@@ -37,6 +37,7 @@ jobs:
 
     - name: Run Unit Tests
       run: |
+        pip install pytest httpx
         export PYTHONPATH=$PYTHONPATH:$(pwd)/app
         pytest app/test/
 
@@ -52,7 +53,7 @@ jobs:
     - name: Build Docker image
       uses: docker/build-push-action@v5
       with:
-        context: ./app
+        context: .
         file: ./app/Dockerfile
         push: false
         load: true
