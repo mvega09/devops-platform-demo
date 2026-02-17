@@ -122,9 +122,9 @@ pkill -f "port-forward.*prometheus-operated" 2>/dev/null
 # App DevOps Platform
 echo -e "${YELLOW}   → Iniciando túnel de la Aplicación...${NC}"
 pkill -f "port-forward.*devops-platform-service" 2>/dev/null
-kubectl port-forward svc/devops-platform-service -n default 8081:80 > /dev/null 2>&1 &
+kubectl port-forward svc/devops-platform-service -n default 8080:80 > /dev/null 2>&1 &
 APP_PF_PID=$!
-echo -e "${GREEN}   ✅ App URL: http://localhost:8081${NC}"
+echo -e "${GREEN}   ✅ App URL: http://localhost:8080${NC}"
 
 # ArgoCD
 echo -e "${YELLOW}   → Iniciando túnel de ArgoCD...${NC}"

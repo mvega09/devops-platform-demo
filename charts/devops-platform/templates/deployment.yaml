@@ -33,6 +33,16 @@ spec:
         imagePullPolicy: {{ .Values.image.pullPolicy | default "Always" }}
         ports:
         - containerPort: {{ .Values.service.targetPort }}
+
+        env:
+          - name: DB_PASS
+            valueFrom:
+              secretKeyRef:
+                name: devops-platform-db-secret
+                key: postgres-password
+
+          - name: DATABASE_URL
+            value: "postgresql://{{ .Values.postgresql.user }}:$(DB_PASS)@{{ .Release.Name }}-db-service:5432/{{ .Values.postgresql.dbName }}"
         envFrom:
         - configMapRef:
             name: {{ .Release.Name }}-config

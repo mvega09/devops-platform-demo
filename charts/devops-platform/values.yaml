@@ -8,7 +8,7 @@ image:
 
 config:
   env: "dev"
-  appName: "DevOps Platform Demo V1.2"
+  appName: "DevOps Platform Demo V1.3"
 
 secret:
   key: "c3VwZXJzZWNyZXRrZXkxMjM="
@@ -33,3 +33,7 @@ hpa:
   maxReplicas: 10
   targetCPUUtilizationPercentage: 80
   targetMemoryUtilizationPercentage: 80
+
+postgresql:
+  dbName: "devops_db"
+  user: "postgres"
