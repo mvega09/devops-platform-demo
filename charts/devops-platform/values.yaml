@@ -1,5 +1,5 @@
 # Valores personalizados para nuestra plataforma
-replicaCount: 2
+replicaCount: 3
 
 image:
   repository: mvega0911/devops-platform
@@ -29,7 +29,7 @@ resources:
 
 hpa:
   enabled: true
-  minReplicas: 2
+  minReplicas: 3
   maxReplicas: 10
   targetCPUUtilizationPercentage: 80
   targetMemoryUtilizationPercentage: 80
